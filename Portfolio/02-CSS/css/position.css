@@ -1,0 +1,37 @@
+body { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+    background-color: #f0f0f0; 
+} 
+
+.container { 
+    position: relative; 
+    width: 300px; 
+    height: 300px; 
+} 
+
+.box { 
+    width: 100px; 
+    height: 100px; 
+    position: relative; 
+} 
+
+.red { 
+    background-color: red; 
+} 
+
+.blue { 
+    background-color: blue; 
+} 
+
+.yellow { 
+    background-color: yellow; 
+     
+} 
+
+@media (min-width: 600px) { 
+    .blue { top: 0; left: 100px; } .yellow { top: 0; left: 200px; } 
+}

@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    display: flex;
+    margin: 0;
+  }
+  
+  .blue, .yellow, .red {
+    width: 33.33%;
+    height: 100vh;
+  }
+  
+  .blue {
+    background-color: blue;
+  }
+  
+  .yellow {
+    background-color: yellow;
+  }
+  
+  .red {
+    background-color: red;
+  }
+  

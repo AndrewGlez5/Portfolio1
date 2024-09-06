@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  height: 100vh;
+}
+
+.box1, .box2, .box3 {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+}
+
+.box1 {
+  background-color: blue;
+  border: 10px solid black;
+  padding: 20px;
+  top: 0;
+  left: 0;
+}
+
+.box2 {
+  background-color: red;
+  border: 20px solid black;
+  top: 200px;
+  left: 200px;
+}
+
+.box3 {
+  background-color: yellow;
+  border: 10px solid black;
+  top: 400px;
+  left: 400px;
+}
