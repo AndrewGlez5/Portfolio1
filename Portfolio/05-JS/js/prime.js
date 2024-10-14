@@ -1,30 +1,55 @@
-/*
-    Prime Factorization - Have the user enter a number and find
-    all Prime Factors (if there are any) and display them.
-*/
+function isPrime(n) {
+  if (n <= 1) return false;
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+      if (n % i === 0) return false;
+  }
+  return true;
+}
 
-var getPrimeFactors = function (n) {
-  "use strict";
+function getNextPrime(n) {
+  let nextPrime = n + 1;
+  while (!isPrime(nextPrime)) {
+      nextPrime++;
+  }
+  return nextPrime;
+}
 
-  function isPrime(n) {
-    var i;
+function getPrimeFactors(n) {
+  let factors = [];
+  let divisor = 2;
 
-    for (i = 2; i <= Math.sqrt(n); i++) {
-      if (n % i === 0) {
-        return false;
+  while (n > 1) {
+      if (n % divisor === 0 && isPrime(divisor)) {
+          factors.push(divisor);
+          n /= divisor;
+      } else {
+          divisor++;
       }
-    }
-    return true;
+  }
+  return factors;
+}
+
+function handlePrimeFactors() {
+  let input = document.getElementById("num").value;
+  let num = parseInt(input);
+
+  if (isNaN(num)) {
+      document.getElementById("pf").innerText = "Please enter a valid number.";
+      return;
   }
 
-  var i,
-    sequence = [];
+  let nextPrime = getNextPrime(num);
+  let result = `The next prime number after ${num} is ${nextPrime}.\n`;
 
-  //TODO: Check which numbers are factors of n and also check if
-  // that number also happens to be a prime
+  let factors = getPrimeFactors(num);
+  if (factors.length === 0) {
+      result += `No prime factors found for ${num}.`;
+  } else {
+      result += `The prime factors of ${num} are: ${factors.join(", ")}.`;
+  }
 
-  return sequence;
-};
+  document.getElementById("pf").innerText = result;
+}
 
-// the prime factors for this number are: [ 2, 3, 5, 7, 11, 13 ]
-console.log(getPrimeFactors(30030));
+
+

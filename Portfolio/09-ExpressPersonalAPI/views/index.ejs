@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Greeting</title>
+</head>
+<body>
+    <h1>Hello!</h1>
+
+    <% if (error) { %>
+        <p style="color:rgb(255, 0, 0);"><%= error %></p>
+    <% } %>
+
+    <form action="/greet" method="GET">
+        <label for="name">Please enter your name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <% if (names.length > 0) { %>
+        <h2>Greetings List</h2>
+        <ul>
+            <% names.forEach((name, idx) => { %>
+                <li><a href="/greet/<%= idx %>">Hello, <%= name %>!</a></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <h2>Task Manager</h2>
+    <form action="/task" method="POST">
+        <label for="task">Add a new task:</label>
+        <input type="text" id="task" name="task" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <ul>
+        <% tasks.forEach((task, idx) => { %>
+            <li><%= task %>
+                <form action="/task/delete/<%= idx %>" method="post" style="display:inline;">
+                    <button type="submit">Remove</button>
+                </form>
+                <form action="/task/move/up/<%= idx %>" method="post" style="display:inline;">
+                    <button type="submit">Move Up</button>
+                </form>
+                <form action="/task/move/down/<%= idx %>" method="post" style="display:inline;">
+                    <button type="submit">Move Down</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+
+</body>
+</html>

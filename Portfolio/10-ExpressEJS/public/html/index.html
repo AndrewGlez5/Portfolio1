@@ -5,17 +5,55 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing page</title>
+    <title>Welcome to Our Site</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-    <img src="../images/StarLion.png" alt="lion brewery" />
-    <h1>Welcome to my landing page</h1>
-    <form>
-        <label for="name">Name</label>
+    <h1>Welcome to Our Site!</h1>
+    <img src="../images/StarLion.png" alt="Lion Brewery Logo" />
+
+    <h2>Login Options</h2>
+    
+    <h3>GET Method</h3>
+    <form action="/login" method="GET">
+        <label for="name">Please provide your Name:</label>
         <input type="text" name="name" id="name" />
-        <input type="submit" />
+        <input type="submit" value="Proceed" />
     </form>
+
+    <h3>POST Method</h3>
+    <form action="/login" method="POST">
+        <label for="name">Your Name:</label>
+        <input type="text" name="name" id="name" />
+        <input type="submit" value="Proceed" />
+    </form>
+
+    <h2>EJS Login</h2>
+    
+    <h3>GET Request</h3>
+    <form action="/loginejs" method="GET">
+        <label for="name">Enter Your Name:</label>
+        <input type="text" name="name" id="name" />
+        <input type="submit" value="Proceed" />
+    </form>
+
+    <h3>POST Request</h3>
+    <form action="/loginejs" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" />
+        <input type="submit" value="Proceed" />
+    </form>
+
+    <br />
+    
+    <h2>Home Login</h2>
+    <form action="/loginh" method="post">
+        <label for="name">Enter Your Name:</label>
+        <input type="text" name="name" id="name" />
+        <input type="submit" value="Login to Home" />
+    </form>
+
 </body>
 
 </html>

@@ -1,0 +1,18 @@
+{
+  "name": "10-expressejs",
+  "version": "1.0.0",
+  "description": "This exercise will showcase how EJS can be employed to produce dynamic content within an Express application.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "AndresGlez",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
+}

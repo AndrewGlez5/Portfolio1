@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<p>You have logged in using the <%= security %> authentication method.</p>
+
+<ul>
+    <% if (!posts || posts.length === 0) { %>
+        <li>Currently, there are no posts available.</li>
+    <% } else { %>
+        <% posts.forEach((post, idx) => { %>
+            <li>
+                <h3><%= post.title %></h3>
+                <p><%= post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content %></p>
+                <a href="/post/<%= idx %>">Continue reading</a>
+            </li>
+        <% }) %>
+    <% } %>
+</ul>
+
+<h3>Create a New Post</h3>
+<form action="/addPost" method="post">
+    <div>
+        <label for="title">Post Title:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <label for="content">Post Content:</label>
+    <div>
+        <textarea id="content" name="content" rows="8" cols="50" placeholder="Enter your content here..." required></textarea>
+        <button type="submit">Submit Post</button>
+    </div>
+</form>
+
+<%- include('partials/footer') %>

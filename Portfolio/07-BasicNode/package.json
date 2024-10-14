@@ -1,0 +1,20 @@
+{
+  "name": "07-basicnode",
+  "version": "1.0.0",
+  "description": "Basic-Node-Exercise",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "07"
+  ],
+  "author": "AndresGlez",
+  "license": "ISC",
+  "dependencies": {
+    "star-wars-quotes": "^1.0.2",
+    "superheroes": "^4.0.0",
+    "supervillains": "^4.0.0"
+  }
+}

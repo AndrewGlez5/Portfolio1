@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<h3>Delete Post</h3>
+<form action="/deletePost/<%= id %>" method="post">
+    <button type="submit" onclick="return confirm('Do you really want to delete this post?');">Remove Post</button>
+</form>
+
+<h3>Edit Post</h3>
+<form action="/editPost/<%= id %>" method="post">
+    <div>
+        <label for="title">Post Title:</label>
+        <input type="text" id="title" name="title" value="<%= post.title %>" required>
+    </div>
+    <label for="content">Post Content:</label>
+    <div>
+        <textarea id="content" name="content" rows="8" cols="50"><%= post.content %></textarea>
+        <button type="submit">Save Changes</button>
+    </div>
+</form>
+
+<a href="/home">Go Back to Home</a>
+
+<%- include('partials/footer') %>
