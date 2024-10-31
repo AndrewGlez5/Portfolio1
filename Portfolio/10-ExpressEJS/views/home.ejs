@@ -1,32 +1,34 @@
-<%- include('partials/header') %>
+<%- include('partials/top') %>
 
-<p>You have logged in using the <%= security %> authentication method.</p>
-
+<p>Logged in with <%= authType %> method.</p>
 <ul>
-    <% if (!posts || posts.length === 0) { %>
-        <li>Currently, there are no posts available.</li>
+    <% if (!entries || entries.length === 0) { %>
+        <li>No articles are available at the moment.</li>
     <% } else { %>
-        <% posts.forEach((post, idx) => { %>
+        <% entries.forEach((entry, index) => { %>
             <li>
-                <h3><%= post.title %></h3>
-                <p><%= post.content.length > 100 ? post.content.substring(0, 100) + '...' : post.content %></p>
-                <a href="/post/<%= idx %>">Continue reading</a>
+                <h3><%= entry.heading %></h3>
+                <p><%= entry.text.length > 100 ? entry.text.substring(0, 100) + '...' : entry.text %></p>
+                <a href="/article/<%= index %>">Read more</a>
             </li>
         <% }) %>
     <% } %>
 </ul>
 
-<h3>Create a New Post</h3>
-<form action="/addPost" method="post">
+<h3>Submit a New Article</h3>
+
+<form action="/submitEntry" method="post">
     <div>
-        <label for="title">Post Title:</label>
-        <input type="text" id="title" name="title" required>
+        <label for="heading">Article Title:</label>
+        <input type="text" id="heading" name="heading" required>
     </div>
-    <label for="content">Post Content:</label>
+
+    <label for="text">Article Content:</label>
+
     <div>
-        <textarea id="content" name="content" rows="8" cols="50" placeholder="Enter your content here..." required></textarea>
-        <button type="submit">Submit Post</button>
+        <textarea id="text" name="text" rows="8" cols="50" placeholder="Type your content here..." required></textarea>
+        <button type="submit">Post Article</button>
     </div>
 </form>
 
-<%- include('partials/footer') %>
+<%- include('partials/bottom') %>

@@ -1,85 +1,85 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
+const parser = require('body-parser');
+const server = express();
 
-let names = [];
-let tasks = [];
+let userNames = [];
+let toDoList = [];
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
+server.use(parser.urlencoded({ extended: true }));
+server.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-    const errorMessage = req.query.error;
-    res.render('index', { names, tasks, error: errorMessage });
+server.get('/', (request, response) => {
+    const errorMsg = request.query.error;
+    response.render('index', { userNames, toDoList, error: errorMsg });
 });
 
-app.get('/greet', (req, res) => {
-    const { name } = req.query;
-    if (name) {
-        names.push(name);
+server.get('/welcome', (request, response) => {
+    const { user } = request.query;
+    if (user) {
+        userNames.push(user);
     }
-    res.redirect('/');
+    response.redirect('/');
 });
 
-app.get('/greet/:nameIndex', (req, res, next) => {
-    const nameIndex = Number(req.params.nameIndex);
-    if (nameIndex >= 0 && nameIndex < names.length) {
-        res.render('wazzup', { name: names[nameIndex] });
+server.get('/welcome/:userIndex', (request, response, next) => {
+    const userIndex = Number(request.params.userIndex);
+    if (userIndex >= 0 && userIndex < userNames.length) {
+        response.render('greeting', { user: userNames[userIndex] });
     } else {
         next(new Error("Invalid index"));
     }
 });
 
-app.post('/task', (req, res) => {
-    const { task } = req.body;
-    if (task) {
-        tasks.push(task);
+server.post('/add-item', (request, response) => {
+    const { item } = request.body;
+    if (item) {
+        toDoList.push(item);
     }
-    res.redirect('/');
+    response.redirect('/');
 });
 
-app.get('/task', (req, res) => {
-    res.json(tasks);
+server.get('/items', (request, response) => {
+    response.json(toDoList);
 });
 
-app.post('/task/delete/:index', (req, res) => {
-    const { index } = req.params;
-    tasks.splice(index, 1);
-    res.redirect('/');
+server.post('/remove-item/:itemIndex', (request, response) => {
+    const { itemIndex } = request.params;
+    toDoList.splice(itemIndex, 1);
+    response.redirect('/');
 });
 
-app.put('/greet/:name', (req, res) => {
-    const { name } = req.params;
-    names.push(name);
-    res.json(names);
+server.put('/welcome/:user', (request, response) => {
+    const { user } = request.params;
+    userNames.push(user);
+    response.json(userNames);
 });
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send("Internal Server Error: " + err.message);
+server.use((error, request, response, next) => {
+    console.error(error.stack);
+    response.status(500).send("Internal Server Error: " + error.message);
 });
 
-app.post('/task/move/up/:index', (req, res) => {
-    const index = parseInt(req.params.index);
-    if (index > 0) {
-        const taskToMove = tasks[index];
-        tasks.splice(index, 1);
-        tasks.splice(index - 1, 0, taskToMove);
+server.post('/move-item/up/:itemIndex', (request, response) => {
+    const itemIndex = parseInt(request.params.itemIndex);
+    if (itemIndex > 0) {
+        const itemToMove = toDoList[itemIndex];
+        toDoList.splice(itemIndex, 1);
+        toDoList.splice(itemIndex - 1, 0, itemToMove);
     }
-    res.redirect('/');
+    response.redirect('/');
 });
 
-app.post('/task/move/down/:index', (req, res) => {
-    const index = parseInt(req.params.index);
-    if (index < tasks.length - 1) {
-        const taskToMove = tasks[index];
-        tasks.splice(index, 1);
-        tasks.splice(index + 1, 0, taskToMove);
+server.post('/move-item/down/:itemIndex', (request, response) => {
+    const itemIndex = parseInt(request.params.itemIndex);
+    if (itemIndex < toDoList.length - 1) {
+        const itemToMove = toDoList[itemIndex];
+        toDoList.splice(itemIndex, 1);
+        toDoList.splice(itemIndex + 1, 0, itemToMove);
     }
-    res.redirect('/');
+    response.redirect('/');
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

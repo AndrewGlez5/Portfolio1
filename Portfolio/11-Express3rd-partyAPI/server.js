@@ -3,58 +3,51 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
+const PORT = 3010;
+const WEATHER_API_KEY = process.env.API_KEY;
 
+app.use(bodyParser.urlencoded({ extended: true }));
 
-const Key = process.env.API_KEY;
-
-app.use(bodyParser.urlencoded({extended:true}));
-
-app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"/index.html");
+app.get("/", (req, res) => {
+    res.sendFile(`${__dirname}/main.html`);
 });
 
-app.post("/",(req,res)=>{
-    const ciudad=req.body.cityName;
+app.post("/", (req, res) => {
+    const cityQuery = req.body.city;
 
-    if(!ciudad){
-        return res.send('<h2>No se proporciono alguna ciudad</h2> <a href="/">Volver</a>');
-        
+    if (!cityQuery) {
+        return res.send('<h2>Especifica una ciudad, por favor.</h2><a href="/">Volver</a>');
     }
 
-    const api=`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${Key}&units=metric`;
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityQuery}&appid=${WEATHER_API_KEY}&units=metric`;
 
-    fetch(api)
+    fetch(weatherUrl)
         .then(response => response.json())
-        .then(data => {
-            if (data.cod !== 200) {
-                return res.send(`Error al obtener el clima para ${ciudad}. Inténtalo de nuevo.`);
+        .then(weatherData => {
+            if (weatherData.cod !== 200) {
+                return res.send(`<h2>Error: no se pudo obtener el clima para ${cityQuery}.</h2><a href="/">Volver</a>`);
             }
 
-            const temperatura = data.main.temp;
-            const descripcion = data.weather[0].description;
-            const icon = data.weather[0].icon; // Obtener el código del ícono del clima
-            const iconUrl = `http://openweathermap.org/img/wn/${icon}@2x.png`; // Construir la URL del ícono
+            const { temp } = weatherData.main;
+            const { description } = weatherData.weather[0];
+            const iconCode = weatherData.weather[0].icon;
+            const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
-
-            // Mostrar el resultado del clima
             res.send(`
-                <h2>Clima en ${data.name}</h2>
-                <p>Temperatura: ${temperatura}°C</p>
-                <p>Descripción: ${descripcion}</p>
-                <img src="${iconUrl}" alt="Icono del clima"/>
+                <h2>Clima en ${weatherData.name}</h2>
+                <p>Temperatura: ${temp}°C</p>
+                <p>Descripción: ${description}</p>
+                <img src="${iconUrl}" alt="Ícono de clima"/>
                 <br>
                 <a href="/">Volver</a>
             `);
         })
-        .catch(error => {
-            console.error('Hubo un problema con la solicitud de clima:', error);
-            res.send('Hubo un error al obtener el clima. Inténtalo de nuevo más tarde.');
+        .catch(err => {
+            console.error('Error al obtener datos de clima:', err);
+            res.send('<h2>Ocurrió un error al intentar obtener el clima. Por favor, intenta de nuevo más tarde.</h2>');
         });
-
 });
 
-
-
-app.listen(7000,()=>{
-    console.log("Listen on port 7000");
+app.listen(PORT, () => {
+    console.log(`El servidor está activo en el puerto ${PORT}`);
 });

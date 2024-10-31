@@ -5,64 +5,81 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mongo DB - F1 test</title>
-    <link rel="stylesheet" href="../css/style.css" />
+    <title>F1 Driver Info Portal</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
 </head>
-<!--
-  url: String,
-  team: teamSchema,
--->
 
 <body>
-    <img src="../images/StarLion.png" alt="lion brewery" />
-    <h1>Welcome to my F1 DB</h1>
-    <form action="/driver" method="get">
-        <h2>Driver information</h2>
-        <input type="text" name="num" id="num" placeholder="Number" />
-        <input type="text" name="code" id="code" placeholder="Code" />
-        <input type="text" name="name" id="name" placeholder="Name" />
-        <input type="text" name="lname" id="lname" placeholder="Last name" />
-        <br />
-        <label for="dob">Date of birth: </label>
-        <input type="date" name="dob" id="dob" />
-        <label for="url">Biography URL: </label>
-        <input type="url" name="url" id="url" />
-        <br />
-        <label for="nation">Nationality: </label>
-        <select name="nation" id="nation">
-            <option value="ENG">England</option>
-            <option value="SPA">Spain</option>
-            <option value="GET">Germany</option>
-            <option value="FRA">France</option>
-            <option value="MEX">Mexico</option>
-            <option value="AUS">Australia</option>
-            <option value="FIN">Finland</option>
-            <option value="DEN">Denmark</option>
-            <option value="NET">Netherlands</option>
-            <option value="CAN">Canada</option>
-            <option value="MON">Monaco</option>
-            <option value="THA">Thailand</option>
-            <option value="JAP">Japan</option>
-            <option value="CHI">China</option>
-            <option value="USA">USA</option>
-        </select>
-        <label for="team">Team: </label>
-        <select name="team" id="team">
-            <option value="mercedes">Mercedes</option>
-            <option value="aston_martin">Aston Martin</option>
-            <option value="alpine">Alpine</option>
-            <option value="hass_f1">Hass F1 Team</option>
-            <option value="red_bull">Red Bull Racing</option>
-            <option value="alpha_tauri">Alpha Tauri</option>
-            <option value="alpha_romeo">Alpha Romeo</option>
-            <option value="ferrari">Ferrari</option>
-            <option value="williams">Williams</option>
-            <option value="mc_laren">McLaren</option>
+    <header>
+        <img src="../assets/images/F1Lion.png" alt="Logo of F1 Lion" />
+        <h1>F1 Drivers Database</h1>
+    </header>
+    
+    <main>
+        <section class="form-section">
+            <form action="/driver" method="get">
+                <h2>Driver Profile</h2>
+                
+                <div class="form-group">
+                    <input type="text" name="driverNumber" id="driverNumber" placeholder="Driver Number" />
+                    <input type="text" name="driverID" id="driverID" placeholder="Driver ID" />
+                    <input type="text" name="firstName" id="firstName" placeholder="First Name" />
+                    <input type="text" name="lastName" id="lastName" placeholder="Surname" />
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthdate">DOB:</label>
+                    <input type="date" name="birthdate" id="birthdate" />
+                </div>
 
-        </select>
-        <p> <input type="submit" /> </p>
+                <div class="form-group">
+                    <label for="profileLink">Profile Link:</label>
+                    <input type="url" name="profileLink" id="profileLink" placeholder="Biography URL" />
+                </div>
 
-    </form>
+                <div class="form-group">
+                    <label for="nationality">Nationality:</label>
+                    <select name="nationality" id="nationality">
+                        <option value="GBR">Great Britain</option>
+                        <option value="ESP">Spain</option>
+                        <option value="GER">Germany</option>
+                        <option value="FRA">France</option>
+                        <option value="MEX">Mexico</option>
+                        <option value="AUS">Australia</option>
+                        <option value="FIN">Finland</option>
+                        <option value="DNK">Denmark</option>
+                        <option value="NLD">Netherlands</option>
+                        <option value="CAN">Canada</option>
+                        <option value="MCO">Monaco</option>
+                        <option value="THA">Thailand</option>
+                        <option value="JPN">Japan</option>
+                        <option value="CHN">China</option>
+                        <option value="USA">United States</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="teamSelect">Racing Team:</label>
+                    <select name="teamSelect" id="teamSelect">
+                        <option value="mercedes">Mercedes-AMG Petronas</option>
+                        <option value="aston_martin">Aston Martin F1</option>
+                        <option value="alpine">Alpine Racing</option>
+                        <option value="haas">Haas F1 Team</option>
+                        <option value="red_bull">Red Bull Racing</option>
+                        <option value="alpha_tauri">Scuderia AlphaTauri</option>
+                        <option value="alfa_romeo">Alfa Romeo</option>
+                        <option value="ferrari">Scuderia Ferrari</option>
+                        <option value="williams">Williams Racing</option>
+                        <option value="mclaren">McLaren F1 Team</option>
+                    </select>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit">Submit Driver Data</button>
+                </div>
+            </form>
+        </section>
+    </main>
 </body>
 
 </html>

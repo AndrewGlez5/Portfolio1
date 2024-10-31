@@ -1,92 +1,93 @@
-const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
+const https = require("https");
+const express = require("express");
 
-const app = express();
+app.use(express.static("assets"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'templates'));
 
-let posts = [
+let user = "";
+const sampleText = 
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sollicitudin eros a metus ultricies, a varius felis gravida. Vestibulum non mi at lacus lacinia feugiat at sed elit.";
+
+let postsList = [
   {
-    title: "Test Post",
-    content: "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing."
+    heading: "Example Article",
+    details: sampleText
   }
 ];
 
-let currentUserName = "";
-
-app.use(express.static("public"));
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: false }));
-app.set('views', path.join(__dirname, 'views'));
-
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/html/index.html"));
+  res.sendFile(path.join(__dirname, "/assets/html/welcome.html"));
 });
 
-app.get("/login", (req, res) => {
-  currentUserName = req.query.name;
-  const loginMethod = "GET";
-  res.send(`Hello ${currentUserName}, you are using the ${loginMethod} method.`);
+app.get("/signin", (req, res) => {
+  user = req.query.user;
+  res.send(`Hello, ${user}. You've signed in via GET.`);
 });
 
-app.post("/login", (req, res) => {
-  currentUserName = req.body.name;
-  const loginMethod = "POST";
-  res.send(`Hello ${currentUserName}, you are using the ${loginMethod} method.`);
+app.post("/signin", (req, res) => {
+  user = req.body.user;
+  res.send(`Hello, ${user}. You've signed in via POST.`);
 });
 
-app.get("/loginejs", (req, res) => {
-  currentUserName = req.query.name;
-  res.render("test", { name: currentUserName, security: "(GET)" });
+app.get("/signin-view", (req, res) => {
+  user = req.query.user;
+  res.render("signin", { user, methodType: "GET" });
 });
 
-app.post("/loginejs", (req, res) => {
-  currentUserName = req.body.name;
-  res.render("test", { name: currentUserName, security: "(POST)" });
+app.post("/signin-view", (req, res) => {
+  user = req.body.user;
+  res.render("signin", { user, methodType: "POST" });
 });
 
-app.post("/loginh", (req, res) => {
-  currentUserName = req.body.name;
-  res.redirect("/home");
+app.post("/signin-dashboard", (req, res) => {
+  user = req.body.user;
+  res.redirect("/dashboard");
 });
 
-app.get("/home", (req, res) => {
-  if (!currentUserName) {
+app.get("/dashboard", (req, res) => {
+  if (!user) {
     return res.redirect("/");
   }
-  res.render("home", { name: currentUserName, posts: posts, security: "secure (POST)" });
+  res.render("dashboard", { user, postsList, methodType: "secure POST" });
 });
 
-app.post("/addPost", (req, res) => {
-  const { title, content } = req.body;
-  if (!title || !content) {
-    return res.send(`<p>Title and content are mandatory. <a href="/home">Go Back</a></p>`);
+app.post("/createArticle", (req, res) => {
+  const { heading, details } = req.body;
+  if (!heading || !details) {
+    return res.send(`<p>Both title and content are required <a href="/dashboard">Return</a></p>`);
   }
-  posts.push({ title, content });
-  res.redirect("/home");
+  postsList.push({ heading, details });
+  res.redirect("/dashboard");
 });
 
-app.get("/post/:id", (req, res) => {
-  const post = posts[req.params.id];
-  res.render("post", { post, id: req.params.id, name: currentUserName });
+app.get("/article/:index", (req, res) => {
+  const article = postsList[req.params.index];
+  res.render("article", { article, index: req.params.index, user });
 });
 
-app.post("/editPost/:id", (req, res) => {
-  const { title, content } = req.body;
-  const postId = req.params.id;
+app.post("/updateArticle/:index", (req, res) => {
+  const { heading, details } = req.body;
+  const articleIndex = req.params.index;
 
-  if (!title || !content) {
-    return res.send(`<p>Both title and content are required. <a href='/post/${postId}'>Go Back</a></p>`);
+  if (!heading || !details) {
+    return res.send(`<p>Title and content are required <a href='/article/${articleIndex}'>Return</a></p>`);
   }
 
-  posts[postId] = { title, content };
-  res.redirect(`/post/${postId}`);
+  postsList[articleIndex] = { heading, details };
+  res.redirect(`/article/${articleIndex}`);
 });
 
-app.post("/deletePost/:id", (req, res) => {
-  posts.splice(req.params.id, 1);
-  res.redirect("/home");
+app.post("/deleteArticle/:index", (req, res) => {
+  postsList.splice(req.params.index, 1);
+  res.redirect("/dashboard");
 });
 
-app.listen(3000, () => {
-  console.log("Server is up and running on port 3000");
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

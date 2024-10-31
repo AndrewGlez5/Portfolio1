@@ -1,0 +1,176 @@
+<%- include('partials/top') %>
+<div class="app-wrapper">
+    <header class="header-logo">
+        <img src="../assets/images/F1LionLogo.png" alt="F1 Lion Logo" class="app-logo" />
+        <h1>Formula 1 Driver & Team Directory</h1>
+    </header>
+
+    <nav class="section-toggle">
+        <button id="show-drivers" class="toggle-button active">Drivers</button>
+        <button id="show-teams" class="toggle-button">Teams</button>
+    </nav>
+
+    <section id="driver-entry" class="entry-form">
+        <h2>Enter Driver Details</h2>
+        <form action="/add-driver" method="get">
+            <div class="form-row">
+                <input type="text" name="driverNumber" placeholder="Driver Number" />
+                <input type="text" name="driverCode" placeholder="Driver Code" />
+            </div>
+            <div class="form-row">
+                <input type="text" name="firstName" placeholder="First Name" />
+                <input type="text" name="lastName" placeholder="Last Name" />
+            </div>
+            <div class="form-row">
+                <label for="birthDate">Date of Birth:</label>
+                <input type="date" name="birthDate" />
+            </div>
+            <div class="form-row">
+                <label for="profileLink">Biography Link:</label>
+                <input type="url" name="profileLink" placeholder="URL" />
+            </div>
+            <div class="form-row">
+                <label for="nationality">Nationality:</label>
+                <select name="nationality" id="nationality">
+                    <% countries.forEach(country => { %>
+                        <option value="<%= country.code %>"><%= country.label %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="team">Current Team:</label>
+                <select name="team" id="team">
+                    <% teams.forEach(team => { %>
+                        <option value="<%= team.name %>"><%= team.name %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <button type="submit" class="submit-button">Add Driver</button>
+        </form>
+    </section>
+
+    <section id="drivers-list" class="data-display">
+        <h2>Current Drivers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Code</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Birth Date</th>
+                    <th>Nationality</th>
+                    <th>Team</th>
+                    <th>Profile Link</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (drivers && drivers.length > 0) { %>
+                    <% drivers.forEach(driver => { %>
+                        <tr>
+                            <form action="/edit-driver/<%= driver._id %>" method="post">
+                                <td><input type="text" name="driverNumber" value="<%= driver.num %>" disabled class="field-input" /></td>
+                                <td><input type="text" name="driverCode" value="<%= driver.code %>" disabled class="field-input" /></td>
+                                <td><input type="text" name="firstName" value="<%= driver.forename %>" disabled class="field-input" /></td>
+                                <td><input type="text" name="lastName" value="<%= driver.surname %>" disabled class="field-input" /></td>
+                                <td><input type="date" name="birthDate" value="<%= moment(driver.dob).format('YYYY-MM-DD') %>" disabled class="field-input" /></td>
+                                <td>
+                                    <select name="nationality" disabled class="field-input">
+                                        <% countries.forEach(country => { %>
+                                            <option value="<%= country.code %>" <%= country.code === driver.nationality ? 'selected' : '' %>><%= country.label %></option>
+                                        <% }); %>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="team" disabled class="field-input">
+                                        <% teams.forEach(team => { %>
+                                            <option value="<%= team.name %>" <%= team.name === driver.current_team ? 'selected' : '' %>><%= team.name %></option>
+                                        <% }); %>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a href="<%= driver.url %>" target="_blank" class="link-view">Open Link</a>
+                                </td>
+                                <td>
+                                    <button type="button" class="edit-button">Edit</button>
+                                    <button type="submit" class="save-button" style="display: none;">Save</button>
+                                </td>
+                            </form>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="9">No driver data available.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="teams-list" class="data-display" style="display: none;">
+        <h2>Team Overview</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Team ID</th>
+                    <th>Team Name</th>
+                    <th>Country</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (teams && teams.length > 0) { %>
+                    <% teams.forEach(team => { %>
+                        <tr>
+                            <td><%= team.id %></td>
+                            <td><%= team.name %></td>
+                            <td><%= team.nationality %></td>
+                            <td><a href="<%= team.url %>" target="_blank" class="external-link"><%= team.url %></a></td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">No team data available.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        const showDriversButton = document.getElementById('show-drivers');
+        const showTeamsButton = document.getElementById('show-teams');
+        const driversList = document.getElementById('drivers-list');
+        const teamsList = document.getElementById('teams-list');
+
+        showDriversButton.addEventListener('click', () => {
+            driversList.style.display = 'block';
+            teamsList.style.display = 'none';
+            showDriversButton.classList.add('active');
+            showTeamsButton.classList.remove('active');
+        });
+
+        showTeamsButton.addEventListener('click', () => {
+            driversList.style.display = 'none';
+            teamsList.style.display = 'block';
+            showTeamsButton.classList.add('active');
+            showDriversButton.classList.remove('active');
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.edit-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const inputs = row.querySelectorAll('.field-input');
+                inputs.forEach(input => {
+                    input.disabled = false;
+                });
+                this.style.display = 'none';
+                row.querySelector('.save-button').style.display = 'inline';
+            });
+        });
+    </script>
+</div>
+<%- include('partials/bottom') %>

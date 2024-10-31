@@ -1,28 +1,25 @@
 const express = require('express');
-const app = express();
+const server = express();
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
-
-app.route('/')
-.get((req, res) => {
-  res.sendFile(__dirname+"/index.html")
-})
-.post((req,res)=>{
-  var weight=req.body.weight;
-  var height=req.body.height;
-  res.send("Your MBI is: "+ weight/(height*height)*10000);
-
-});
-
-app.get('/about', (req, res) => {
-    res.send('Hello My Friends')
+server.route('/')
+  .get((request, response) => {
+    response.sendFile(__dirname + "/home.html");
+  })
+  .post((request, response) => {
+    const mass = request.body.weight;
+    const stature = request.body.height;
+    const bmi = (mass / (stature * stature)) * 10000;
+    response.send("Your BMI is: " + bmi);
   });
 
+server.get('/info', (request, response) => {
+  response.send('Greetings to all visitors!');
+});
 
-
-app.listen(3000, ()=>{
-    console.log("Aplication Listening port 3000")
+server.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });
 
