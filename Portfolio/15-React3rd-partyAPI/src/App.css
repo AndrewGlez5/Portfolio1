@@ -1,0 +1,55 @@
+.MainApp {
+  text-align: center;
+}
+
+.MainApp-logo {
+  width: 35vmin;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .MainApp-logo {
+    animation: Logo-spin infinite 15s ease-in-out;
+  }
+}
+
+.MainApp-header {
+  background-color: #1c2025;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-size: calc(12px + 1.8vmin);
+  color: #f0f0f0;
+}
+
+.MainApp-link {
+  color: #4fc3f7;
+  text-decoration: underline;
+}
+
+@keyframes Logo-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.page-container {
+  padding: 24px;
+  background-color: #add8e6;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body, html {
+  background-color: #121212;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  margin: 0;
+  height: 100%;
+}
