@@ -1,0 +1,56 @@
+.card-movie {
+  max-width: 20rem;
+  min-height: 100%;
+  border: 1.5px solid #ccc;
+  transition: all 0.4s ease-in-out;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.card-movie:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-5px);
+}
+
+.card-movie-img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: fill;
+  object-position: top;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card-movie-img:hover {
+  transform: scale(1.05);
+}
+
+.card-movie-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #444;
+  margin-top: 0.5rem;
+}
+
+.card-movie-subtitle {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0.5rem 0;
+}
+
+.card-movie-actions button {
+  font-size: 0.85rem;
+  border: none;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-movie-actions button:hover {
+  background-color: #ddd;
+}
+
+.card-movie-actions .btn-gap {
+  margin-left: 0.6rem !important;
+}

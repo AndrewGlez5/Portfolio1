@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Segoe UI', 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+code {
+  font-family: 'Courier New', Courier, 'Lucida Console', monospace;
+  font-size: 0.95rem;
+  background-color: #f4f4f4;
+  color: #c7254e;
+  padding: 2px 4px;
+  border-radius: 3px;
+}

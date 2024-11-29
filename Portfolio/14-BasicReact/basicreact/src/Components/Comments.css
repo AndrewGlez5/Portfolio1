@@ -1,0 +1,66 @@
+.feedback-container {
+  background-color: #2c2f33;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.feedback-header {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #e9ecef;
+}
+
+.feedback-list {
+  margin-bottom: 20px;
+}
+
+.feedback-item {
+  background-color: #3c4043;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.feedback-item strong {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.feedback-form {
+  margin-top: 25px;
+}
+
+.feedback-input {
+  background-color: #3c4043;
+  color: #ffffff;
+  border: 1px solid #5a6268;
+  border-radius: 6px;
+  padding: 10px;
+  width: 100%;
+}
+
+.feedback-input:focus {
+  border-color: #1e90ff;
+  box-shadow: 0 0 6px rgba(30, 144, 255, 0.6);
+  outline: none;
+}
+
+.feedback-submit-btn {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  background-color: #1e90ff;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.feedback-submit-btn:hover {
+  background-color: #1c7ed6;
+  cursor: pointer;
+}
